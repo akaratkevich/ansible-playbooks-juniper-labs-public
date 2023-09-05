@@ -2,7 +2,7 @@
   gather_facts: no
   tasks:
     - name: Loop over all hosts in the inventory
-      include_tasks: ~/git_hub/data-model-junos/tasks/load-tasks.yml
+      include_tasks: tasks/load-tasks.yml
       loop: "{{ groups['all'] }}"
       vars:
         hostname: "{{ item }}"

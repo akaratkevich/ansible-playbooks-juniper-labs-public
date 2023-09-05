@@ -1,0 +1,5 @@
+- include_tasks: render-template.yml
+  vars:
+    template_src: "templates/ospf.j2"
+    template_dest: "configuration/{{ hostname }}-ospf-config.txt"
+

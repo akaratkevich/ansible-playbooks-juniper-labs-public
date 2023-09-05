@@ -1,0 +1,5 @@
+- include_tasks: render-template.yml
+  vars:
+    template_src: "templates/interface.j2"
+    template_dest: "configuration/{{ hostname }}-interface-config.txt"
+

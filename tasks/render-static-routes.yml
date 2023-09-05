@@ -1,5 +1,0 @@
-- include_tasks: render-template.yml
-  vars:
-    template_src: "~/git_hub/data-model-junos/templates/static-routes.j2"
-    template_dest: "~/git_hub/data-model-junos/configuration/{{ hostname }}-static-routes-config.txt"
-

@@ -9,7 +9,7 @@
   tasks:
     - name: Discover configuration files based on hostname
       find:
-        paths: "~/git_hub/data-model-junos/configuration"
+        paths: "configuration"
         patterns: "{{ inventory_hostname }}*-config.txt"
       register: config_files
 

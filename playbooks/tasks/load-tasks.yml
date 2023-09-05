@@ -1,6 +1,6 @@
 - name: Load vars for {{ hostname }}
   include_vars:
-    file: "~/git_hub/data-model-junos/host-vars/{{ hostname }}.yml"
+    file: "host-vars/{{ hostname }}.yml"
   register: var_result
   ignore_errors: yes
 

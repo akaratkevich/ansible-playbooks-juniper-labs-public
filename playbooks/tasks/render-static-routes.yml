@@ -1,0 +1,5 @@
+- include_tasks: render-template.yml
+  vars:
+    template_src: "templates/static-routes.j2"
+    template_dest: "configuration/{{ hostname }}-static-routes-config.txt"
+
