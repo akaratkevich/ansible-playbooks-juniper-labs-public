@@ -1,0 +1,38 @@
+pipeline {
+    agent mcc 
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Assuming you are using a Git repository. Adjust as needed.
+                checkout scm
+            }
+        }
+
+        stage('Run render-config.yml') {
+            steps {
+                script {
+                    // Run the Ansible playbook
+                    sh 'ansible-playbook render-config.yml'
+                }
+            }
+        }
+
+        stage('Run load-config.yml') {
+            steps {
+                script {
+                    // Run the Ansible playbook
+                    sh 'ansible-playbook load-config.yml'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Cleanup or any other post actions if necessary
+            echo 'Pipeline execution completed!'
+        }
+    }
+}
+
