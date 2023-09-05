@@ -1,0 +1,27 @@
+---
+- name: Load and commit base configuration
+  hosts: vr-vmx
+  gather_facts: false
+  connection: local
+
+  roles:
+    - Juniper.junos
+  tasks:
+    - name: Discover configuration files based on hostname
+      find:
+        paths: "~/git_hub/data-model-junos/configuration"
+        patterns: "{{ inventory_hostname }}*-config.txt"
+      register: config_files
+
+    - name: Load configuration from discovered files and commit
+      juniper_junos_config:
+        load: merge
+        format: set
+        src: "{{ item.path }}"
+      loop: "{{ config_files.files }}"
+      register: response
+
+    - name: Print the response for each file
+      debug:
+        var: response
+

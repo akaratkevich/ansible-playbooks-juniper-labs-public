@@ -1,0 +1,13 @@
+---
+- name: Render configuration template for {{ hostname }}
+  template:
+    src: "{{ template_src }}"
+    dest: "{{ template_dest }}"
+  delegate_to: localhost
+
+# Resetting the hostname variable after rendering for the current host
+- name: Reset hostname variable
+  set_fact:
+    hostname: ""
+  when: hostname is defined
+

@@ -1,0 +1,23 @@
+{% if host_policy_options.policy_statement is defined and host_policy_options.policy_statement is not none %}
+{% for ps_key, ps_val in host_policy_options.policy_statement.items() %}
+set policy-options policy-statement {{ ps_val.name }} from {{ ps_val.from }}
+set policy-options policy-statement {{ ps_val.name }} then {{ ps_val.then }}
+{% endfor %}
+{% endif %}
+
+{% if host_protocols.ospf is defined and host_protocols.ospf is not none %}
+{% for area, area_values in host_protocols.ospf.area.items() %}
+set protocols ospf area {{ area }}
+{% if area_values.interfaces is defined %}
+{% for key, interface in area_values.interfaces.items() %}
+set protocols ospf area {{ area }} interface {{ interface }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% if host_protocols.ospf.policy_statement is defined %}
+{% for ps_key, ps_val in host_protocols.ospf.policy_statement.items() %}
+set protocols ospf export {{ ps_val.name }}
+{% endfor %}
+{% endif %}
+{% endif %}
+

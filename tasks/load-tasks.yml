@@ -1,0 +1,22 @@
+- name: Load vars for {{ hostname }}
+  include_vars:
+    file: "~/git_hub/data-model-junos/host-vars/{{ hostname }}.yml"
+  register: var_result
+  ignore_errors: yes
+
+- name: Check if vars were loaded
+  debug:
+    msg: "Vars for {{ hostname }} were loaded successfully!"
+  when: var_result is defined and not var_result.failed
+
+- name: Render interfaces
+  include_tasks: render-interface.yml
+  when: var_result is defined and not var_result.failed
+
+- name: Render static routes
+  include_tasks: render-static-routes.yml
+  when: var_result is defined and not var_result.failed
+
+- name: Render OSPF
+  include_tasks: render-ospf.yml
+  when: var_result is defined and not var_result.failed

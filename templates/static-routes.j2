@@ -1,0 +1,14 @@
+{% if host_routing_options is defined and host_routing_options.static is defined and host_routing_options.static.route is defined %}
+{% for route_id, route in host_routing_options.static.route.items() %}
+{% if route.destination is defined %}
+{% if route.next_hop is defined and route.next_hop %}
+set routing-options static route {{ route.destination }} next-hop {{ route.next_hop }}{% if route.preference is defined and route.preference %} preference {{ route.preference }}{% endif %}
+
+{% elif route.qualified_next_hop is defined and route.qualified_next_hop %}
+set routing-options static route {{ route.destination }} qualified-next-hop {{ route.qualified_next_hop }}{% if route.preference is defined and route.preference %} preference {{ route.preference }}{% endif %}
+
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+

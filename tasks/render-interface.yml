@@ -1,0 +1,5 @@
+- include_tasks: render-template.yml
+  vars:
+    template_src: "~/git_hub/data-model-junos/templates/interface.j2"
+    template_dest: "~/git_hub/data-model-junos/configuration/{{ hostname }}-interface-config.txt"
+

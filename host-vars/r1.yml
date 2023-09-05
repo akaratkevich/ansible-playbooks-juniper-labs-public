@@ -1,0 +1,121 @@
+---
+host: r1
+host_defaults:
+  hostname: r1
+  mgmt_ip:
+
+host_vlans:
+  vlan_id:
+    1:
+      name:
+    4094:
+      name:
+
+host_interfaces:
+  ge-0/0/0:
+    description: "## Link from R1 to R2 - primary ##"
+    state_enabled: true
+    unit:
+      0:
+        description: "## L3 Link from R1 to R2 - primary ##"
+        family: inet
+        ip_address: 10.0.0.1/30
+
+  ge-0/0/1:
+    description: "## Link from R1 to R2 - secondary ##"
+    state_enabled: true
+    unit:
+      0:
+        description: "## L3 Link from R1 to R2 - secondary ##"
+        family: inet
+        ip_address: 10.0.0.5/30
+
+  ge-0/0/2:
+    description: "## Link from R1 to R4 ##"
+    state_enabled: true
+    unit:
+      0:
+        description: "## L3 Link from R1 to R4 ##"
+        family: inet
+        ip_address: 10.0.0.13/30
+
+  ge-0/0/3:
+    description: "## Link from R1 to C1 ##"
+    state_enabled: false
+    unit:
+      0:
+        description: ""
+        family:
+        ip_address:
+
+  ge-0/0/4:
+    description: "## Link from R1 to C4 ##"
+    state_enabled: false
+    unit:
+      0:
+        description: ""
+        family:
+        ip_address:
+
+host_irb_interfaces:
+  unit:
+    0:
+      description: ""
+      family:
+      ip_address:
+      filter:
+        in:
+        out:
+
+host_lo0_interfaces:
+  description: "## Loopback interface ##"
+  state_enabled: true
+  unit:
+    0:
+      family: inet
+      ip_address: 10.255.255.1/32
+
+host_routing_options:
+  static:
+    route:
+      1:
+        destination: 10.255.255.2/32
+        next_hop: 10.0.0.2
+        qualified_next_hop:
+        preference:
+      2:
+        destination: 10.255.255.2/32
+        next_hop:
+        qualified_next_hop: 10.0.0.6
+        preference:
+      3:
+        destination: 0.0.0.0/0
+        next_hop: 10.0.0.2
+        qualified_next_hop:
+        preference:
+      4:
+        destination: 0.0.0.0/0
+        next_hop: 10.0.0.6
+        qualified_next_hop:
+        preference:
+  autonomous_system:
+
+host_protocols:
+  rsvp:
+  mpls:
+  bgp:
+  isis:
+  ldp:
+  vrrp:
+  bfd:
+  lacp:
+  lldp:
+
+host_policy_options:
+  prefix_list:
+  route_filter_list:
+  policy_statement:
+  community:
+
+host_routing_instances:
+

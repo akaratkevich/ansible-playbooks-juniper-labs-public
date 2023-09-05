@@ -1,0 +1,16 @@
+{% if host_interfaces is defined %}
+{% for interface, values in host_interfaces.items() %}
+{% if values.state_enabled is defined and values.state_enabled %}
+set interfaces {{ interface }} enable
+{% endif %}
+{% if values.description is defined and values.description %}
+set interfaces {{ interface }} description "{{ values.description }}"
+{% endif %}
+{% for unit, unit_values in values.unit.items() %}
+{% if unit_values.family is defined and unit_values.family and unit_values.ip_address is defined and unit_values.ip_address %}
+set interfaces {{ interface }} unit {{ unit }} family {{ unit_values.family }} address {{ unit_values.ip_address }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
