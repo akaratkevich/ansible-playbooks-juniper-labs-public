@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Run the Ansible playbook
-                    sh 'ansible-playbook render-config.yml'
+                    sh 'ansible-playbook playbooks/render-config.yml'
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // Run the Ansible playbook
-                    sh 'ansible-playbook load-config.yml'
+                    sh 'ansible-playbook playbooks/load-config.yml'
                 }
             }
         }
