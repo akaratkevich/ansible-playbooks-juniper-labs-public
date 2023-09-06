@@ -4,29 +4,18 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Assuming you are using a Git repository. Adjust as needed.
                 checkout scm
             }
         }
 
-        stage('Run render-config.yml') {
+        stage('Run show-route-xml.yml') {
             steps {
                 script {
                     // Run the Ansible playbook
-                    sh 'ansible-playbook playbooks/render-config.yml'
+                    sh 'ansible-playbook playbooks/show-route-xml.yml'
                 }
             }
         }
-
-        stage('Run load-config.yml') {
-            steps {
-                script {
-                    // Run the Ansible playbook
-                    sh 'ansible-playbook playbooks/load-config.yml'
-                }
-            }
-        }
-    }
 
     post {
         always {
