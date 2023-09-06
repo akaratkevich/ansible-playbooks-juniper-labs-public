@@ -1,0 +1,37 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Run render-config.yml') {
+            steps {
+                script {
+                    // Run the Ansible playbook
+                    sh 'ansible-playbook playbooks/render-config.yml'
+                }
+            }
+        }
+
+        stage('Run load-config.yml') {
+            steps {
+                script {
+                    // Run the Ansible playbook
+                    sh 'ansible-playbook playbooks/load-config.yml'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Cleanup or any other post actions if necessary
+            echo 'Pipeline execution completed!'
+        }
+    }
+}
+

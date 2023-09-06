@@ -1,0 +1,26 @@
+---
+- name: Capture Routes on Juniper Devices in XML
+  hosts: vr-vmx
+  gather_facts: false
+  connection: local
+
+  collections:
+     juniper.device
+
+  tasks:
+    - name: Retrieve Routes in XML
+      command:
+        commands: "show route"
+        format: "xml"  
+      register: route_output
+
+    - name: Get current date and time
+      ansible.builtin.shell: date +"%Y%m%d%H%M"
+      register: current_datetime
+      changed_when: false
+
+    - name: Save Routes to XML File
+      copy:
+        content: "{{ route_output.stdout_lines | join('\n') }}"
+        dest: captures/routes_{{ inventory_hostname }}_{{ current_datetime.stdout }}.xml
+
