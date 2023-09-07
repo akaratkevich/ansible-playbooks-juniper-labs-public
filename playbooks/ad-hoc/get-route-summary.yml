@@ -15,10 +15,14 @@
     - name: Print response
       debug:
         var: response
+      tags:
+        - show
 
     - name: Save Routes Table to File
       template:
-        src: templates/routes_table.j2  # Jinja2 template file named routes_table.j2
-        dest: "facts/{{ inventory_hostname }}_routes_summary.txt"  # Use inventory_hostname in the destination file path
+        src: ../templates/routes_table.j2  # Jinja2 template file named routes_table.j2
+        dest: "../facts/{{ inventory_hostname }}_routes_summary.txt"
       delegate_to: localhost
+      tags:
+        - save
 

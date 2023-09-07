@@ -13,14 +13,25 @@
         commands: "show route"
         format: "xml"  
       register: route_output
+      tags:
+        - get
 
     - name: Get current date and time
       ansible.builtin.shell: date +"%Y%m%d%H%M"
       register: current_datetime
       changed_when: false
 
+    - name: Display Routes
+      debug:
+        var: route_output.stdout
+      tags:
+        - show
+
+
     - name: Save Routes to XML File
       copy:
         content: "{{ route_output.stdout_lines | join('\n') }}"
-        dest: captures/routes_{{ inventory_hostname }}_{{ current_datetime.stdout }}.xml
+        dest: ../captures/routes_{{ inventory_hostname }}_{{ current_datetime.stdout }}.xml
+      tags:
+        - save
 
