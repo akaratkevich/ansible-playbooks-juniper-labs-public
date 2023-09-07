@@ -11,7 +11,7 @@ host_vlans:
     4094:
       name:
 
-host_interfaces:
+host_l3_interfaces:
   ge-0/0/0:
     description: "## Link from R2 to R1 - primary ##"
     state_enabled: true
