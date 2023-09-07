@@ -1,0 +1,13 @@
+Route Summary Table
+============
+{% macro print_route(route_data, indent=0) %}
+{% for item in route_data %}
+{{ ' ' * indent }}{{ item[0] }}: {{ item[1][0][1] | string }} destinations, {{ item[1][1][1] | string }} routes ({{ item[1][2][1] | string }} active, {{ item[1][3][1] | string }} holddown, {{ item[1][4][1] | string }} hidden)
+{% for protocol in item[1][5][1] %}
+{{ ' ' * (indent + 2) }}{{ protocol[0] }}: {{ protocol[1][0][1] | string }} routes, {{ protocol[1][1][1] | string }} active
+{% endfor %}
+{% endfor %}
+{% endmacro %}
+
+{{ print_route(response.resource) }}
+

@@ -1,0 +1,31 @@
+- name: Get Junos Facts and Configuration
+  hosts: vr-vmx
+  gather_facts: no
+  connection: local
+  roles:
+    - Juniper.junos
+
+  tasks:
+    - name: Get Junos OS Facts
+      juniper_junos_facts:
+      register: junos_facts
+
+    - name: Get Junos Configuration
+      juniper_junos_command:
+        commands:
+          - show configuration
+      register: junos_config
+
+    - name: Save Junos Facts as JSON
+      copy:
+        content: "{{ junos_facts | to_nice_json(indent=2) }}"
+        dest: "facts/{{ inventory_hostname }}_junos_facts.json"
+      delegate_to: localhost
+
+    - name: Save Junos Configuration as JSON
+      copy:
+        content: "{{ junos_config.stdout_lines | to_nice_json(indent=2) }}"
+        dest: "facts/{{ inventory_hostname }}_junos_config.json"
+      delegate_to: localhost
+
+
