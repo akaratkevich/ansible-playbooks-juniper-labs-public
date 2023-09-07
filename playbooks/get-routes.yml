@@ -1,0 +1,24 @@
+- name: Retrieve routes and save as a table
+  hosts: vr-vmx
+  gather_facts: no
+  connection: local
+  roles:
+    - Juniper.junos
+  tasks:
+    - name: Retrieve routes
+      juniper_junos_table:
+        file: "routes.yml"
+        table: "RouteSummaryTable"
+        response_type: "juniper_items"
+      register: response
+
+    - name: Print response
+      debug:
+        var: response
+
+    - name: Save Routes Table to File
+      template:
+        src: templates/routes_table.j2  # Jinja2 template file named routes_table.j2
+        dest: "facts/{{ inventory_hostname }}_routes_summary.txt"  # Use inventory_hostname in the destination file path
+      delegate_to: localhost
+
