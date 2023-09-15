@@ -1,0 +1,54 @@
+---
+- name: Tidy-up
+  hosts: localhost
+  tasks:
+    - name: Find XML files in "captures" directory
+      ansible.builtin.find:
+        paths: "../captures"
+        recurse: yes
+        patterns: "*.xml"
+      register: found_files
+      tags:
+        - captures
+
+    - name: Deleting XML files in "captures" directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ found_files.files }}"
+      tags:
+        - captures
+
+    - name: Find TXT files in "configuration" directory
+      ansible.builtin.find:
+        paths: "../configuration"
+        recurse: yes
+        patterns: "*.txt"
+      register: found_files
+      tags:
+        - configuration
+
+    - name: Deleting TXT files in "configuration" directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ found_files.files }}"
+      tags:
+        - congiguration
+
+    - name: Find files in "facts" directory
+      ansible.builtin.find:
+        paths: "../facts"
+        recurse: yes
+        patterns: "*"
+      register: found_files
+      tags:
+        - facts
+
+    - name: Deleting files in "facts" directory
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ found_files.files }}"
+      tags:
+        - facts

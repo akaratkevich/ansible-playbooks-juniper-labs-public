@@ -24,4 +24,6 @@
     - name: Print the response for each file
       debug:
         var: response
+      tags:
+        - show
 

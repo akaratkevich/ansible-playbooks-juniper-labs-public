@@ -1,0 +1,12 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Loop over all hosts in the inventory
+      include_tasks: tasks/load-interface-tasks.yml
+      loop: "{{ groups['all'] }}"
+      vars:
+        hostname: "{{ item }}"
+      loop_control:
+        loop_var: hostname
+      ignore_errors: true
+

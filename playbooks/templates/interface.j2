@@ -1,5 +1,5 @@
-{% if host_interfaces is defined %}
-{% for interface, values in host_interfaces.items() %}
+{% if host_l3_interfaces is defined %}
+{% for interface, values in host_l3_interfaces.items() %}
 {% if values.state_enabled is defined and values.state_enabled %}
 set interfaces {{ interface }} enable
 {% endif %}
