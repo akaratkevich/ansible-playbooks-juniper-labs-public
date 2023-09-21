@@ -97,7 +97,7 @@ host_routing_options:
         destination: 0.0.0.0/0
         next_hop: 10.0.0.6
         qualified_next_hop:
-        preference: 50
+        preference: 
   autonomous_system:
 
 host_protocols:
