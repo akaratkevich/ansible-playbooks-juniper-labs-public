@@ -13,7 +13,7 @@ host_vlans:
 
 host_l3_interfaces:
   ge-0/0/0:
-    description: "## Link from R1 to R2 - primary ##"
+    description: "## Link from R1 to R2 - primary (A)##"
     state_enabled: true
     unit:
       0:
