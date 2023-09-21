@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Define a list of nodes
-nodes=(
-    "anton@r1"
-    "anton@r2"
-    "anton@r3"
-)
+# Path to the Ansible inventory file
+inventory_file="/home/anton/git_hub/ansible-playbooks-juniper-labs-public/inventory/inventory.yml"
+
+# Use ansible-inventory to extract hostnames from the 'routers' group
+nodes=($(ansible-inventory -i "$inventory_file" --list | jq -r '.routers.hosts[]'))
 
 # Define the command to execute on each node
 command_to_execute="show interfaces descriptions"
