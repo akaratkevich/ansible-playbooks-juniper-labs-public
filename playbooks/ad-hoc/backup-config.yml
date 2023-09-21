@@ -1,0 +1,18 @@
+---
+- name: Backup Juniper Device Configuration
+  hosts: vr-vmx
+  gather_facts: false
+  connection: local
+
+  collections:
+    - juniper.device
+
+  tasks:
+    - name: Backup Juniper Configuration
+      juniper.device.config:
+        hostname: "{{ inventory_hostname }}"
+        destination: ../facts/{{ inventory_hostname }}_config.txt
+        retrieve: committed
+        format: set
+      delegate_to: localhost
+

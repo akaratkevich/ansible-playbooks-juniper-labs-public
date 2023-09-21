@@ -1,0 +1,40 @@
+
+set version 22.3R1.11
+set system host-name r2
+set system root-authentication encrypted-password "$6$un09TBqo$wwz5wURO0oPzhi1MV8Focouk6BO8q1FZXsnqjvpiHxcrADc4uRx/VU8x60LSkzxq3woeCkU0s1E2/0qAsqCST/"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$AMMaPbDX$jitxc8YBcb2MI0YHBP3iPNBVCzuqJTghatCF/AyTHf6xwZlSC9Y5Xd4mHXIBR0/0Uhk7/JVRB3cFHbmyUuVMX1"
+set system login user anton uid 2001
+set system login user anton class super-user
+set system login user anton authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCY6VfaiWRFho3iUH0fNAAflC6jthfnDDA7TMhMIQqoNv93UlJu6B+2uDRqYeCSmX92v0Lba9Skuu585N5mnT9+oS2VHmdI0QYbD0BNizW75N4q6X2V6AzchvGpVQVGBahM4uXXpA87WiL/0Oof+nPWa9hh93jtqWNuQ1Oq/m5dItkcOjHtZgRZspUsl4fxoVj/gixxTudbMbhrMBjJ3mcH+HlHEBwfGCccXtdJL5cZQRIAyI3284287qq6xwHuaAOjsQlZ1K86ptkpPj0xWBD0ocMt06lL4xVzRjAOx2W1+gHUO0iSoHyHYY6j+7GN0ciyxZL5bQKWU8wpiuhKSFQkACcTtAbEXEjwMWqjSbLl6w0ZuH3Pa6F/pFQRi+p70XqEDcAKBKTYIk57Lbw0fOa23RusjAefhm77LbkB2VA9nI5ApWStwQS/fDK4nCiyHqz0ETx/VIEQpZpUQAruJwJOSFlZBoDLUdlfLU8ns4TvavwJ5d2KB5zu14HCycYnSVM= anton@mcc"
+set system services ssh
+set system services extension-service request-response grpc clear-text port 57400
+set system services extension-service request-response grpc max-connections 4
+set system services netconf ssh
+set system services netconf rfc-compliant
+set system management-instance
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set chassis fpc 0 pic 0 number-of-ports 96
+set interfaces ge-0/0/0 description "## Link from R2 to R1 - primary ##"
+set interfaces ge-0/0/0 enable
+set interfaces ge-0/0/0 unit 0 family inet address 10.0.0.2/30
+set interfaces ge-0/0/1 description "## Link from R2 to R1 - secondary ##"
+set interfaces ge-0/0/1 enable
+set interfaces ge-0/0/1 unit 0 family inet address 10.0.0.6/30
+set interfaces ge-0/0/2 description "## Link from R2 to R3 - primary ##"
+set interfaces ge-0/0/2 enable
+set interfaces ge-0/0/2 unit 0 family inet address 10.0.0.9/30
+set interfaces ge-0/0/4 description "## Link from R2 to R3 - secondary ##"
+set interfaces ge-0/0/4 enable
+set interfaces ge-0/0/4 unit 0 family inet address 10.0.0.21/30
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces lo0 unit 0 family inet address 10.255.255.2/32
+set policy-options policy-statement CONNECTED-TO-OSPF from protocol direct
+set policy-options policy-statement CONNECTED-TO-OSPF then accept
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2
+set routing-instances mgmt_junos description management-instance
+set protocols ospf area 0.0.0.0 interface ge-0/0/2.0
+set protocols ospf export CONNECTED-TO-OSPF
